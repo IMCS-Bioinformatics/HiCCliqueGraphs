@@ -1,4 +1,4 @@
-# ISBRAprivate
+# HiCCliqueGraphs
 This is a repository for our paper **Clique-based topological characterization of Hi-C interaction graphs.**
 
 Scripts for calculating and analyzing different topological elements of Hi-C graphs are included here.
@@ -13,6 +13,7 @@ Clone this repository to your local computer to use it.
 - networkx 2.8.4
 - goatools 1.2.4
 - intervaltree 3.1.0
+
 These versions were used by us. Other versions are not guaranteed to work.
 
 ## Data availability
