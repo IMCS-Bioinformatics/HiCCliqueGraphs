@@ -1,16 +1,19 @@
 # ISBRAprivate
-This is a repository for our paper **Clique-based topological characterization of Hi-C interaction graphs**
+This is a repository for our paper **Clique-based topological characterization of Hi-C interaction graphs.**
+
 Scripts for calculating and analyzing different topological elements of Hi-C graphs are included here.
 
 ## Usage
 Clone this repository to your local computer to use it.
 
 ### Dependencies
-- numpy
-- matplotlib.pyplot
-- networkx
-- goatools
-- intervaltree
+- python 3.9
+- numpy 1.21.5
+- matplotlib 3.5.2
+- networkx 2.8.4
+- goatools 1.2.4
+- intervaltree 3.1.0
+These versions were used by us. Other versions are not guaranteed to work.
 
 ## Data availability
 Sample datasets with data on two chromosomes are included in [sampleData](./sampleData) and all scripts in this repository use them as an example.
