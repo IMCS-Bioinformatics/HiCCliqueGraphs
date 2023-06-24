@@ -1,0 +1,46 @@
+<head>
+	<!-- Load plotly.js into the DOM -->
+	<script src='plotly-2.16.1.min.js'></script>
+    <script src='underscore-min.js'></script>
+    <script type="text/javascript" src="papaparse.min.js"></script>
+    <!-- <script src='visualizator.js'></script> -->
+</head>
+
+<div style="display:inline-flex">
+    <div id="selectionDiv"> 
+        <div>
+            <input id="readFile" type="file" onchange="read(this)"/>
+        </div>  
+        <!--<div id="buttonPlaceholder"></div>     -->        
+    </div>
+</div>
+
+<body>
+	<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+</body>
+
+<script src='visualizator.js'></script>
+
+
+
+<script>
+    function readFile(file) {
+        return new Promise((resolve, reject) => {
+            let fr = new FileReader();
+            fr.onload = x=> resolve(fr.result);
+            fr.readAsText(file);
+        })}
+
+    async function read(input) {
+        text = await readFile(input.files[0]);
+        var dotList = input.files[0].name.split(".");
+        if (input.files[0].type === "application/json" || dotList[dotList.length - 1] === "json") {
+            rez = JSON.parse(text);
+            data = rez;
+            console.log("read data", input.files[0].name)
+            console.log(data);
+            container.setData(data);
+        }
+    }
+    var container = new myContainer("myDiv")
+</script>
