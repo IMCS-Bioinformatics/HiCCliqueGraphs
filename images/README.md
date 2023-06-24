@@ -1,6 +1,10 @@
 # Images from our paper
 This directory has scripts for generating images that were used in our paper.
 
-Fig. 2 images can be generated using [analyzeLinkLengths notebook](analyzeLinkLengths.ipynb).
+Fig. 2 images (that compare real and randomized link lengths) can be generated using [analyzeLinkLengths notebook](analyzeLinkLengths.ipynb).
+
+Images to compare all 3 dataset link loci can be generated using [all3DSinOne notebook](all3DSinOne.ipynb).
+
+
 
 
