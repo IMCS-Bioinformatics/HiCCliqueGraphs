@@ -27,7 +27,7 @@ Biolog = GOEATool("GOEA/ontologyData/go-basic.obo", "GOEA/ontologyData/hg19_gene
 
 
 #triangles1 vs links1
-rezFN = "CL1vsLinks1-{}vsRand.csv".format(Us[0].DS)
+rezFN = "CL1vsLinks1.csv"
 what = "Cycles C3 w/ 1+ tissue vs Links w/ 1+ tissue"
 
 for U in Us:
@@ -43,7 +43,7 @@ Biolog.dump(rezFN)
 Biolog.reset()
 
 #triangles2 vs links2
-rezFN = "CL2vsLinks2-{}vsRand.csv".format(Us[0].DS)
+rezFN = "CL2vsLinks2.csv"
 what = "Cycles C3 w/ 2+ tissue vs Links w/ 2+ tissue"
 
 for U in Us:
@@ -60,7 +60,7 @@ Biolog.reset()
 ##################################################################
 
 #triangles1 vs all possibles
-rezFN = "CL2vsAll-{}vsAllPossible.csv".format(Us[0].DS)
+rezFN = "CL2vsAllPossible.csv"
 what = "Cycles C3 w/ 2+ tissue vs All possible genes"
 
 for U in Us:
@@ -106,7 +106,7 @@ Biolog.dump(rezFN)
 Biolog.reset()
 #############################################################
 #bases 5 vs links 2
-rezFN = "BasesLogvsLinks2-{}vsRand.csv".format(Us[0].DS)
+rezFN = "BasesLogvsLinks2.csv"
 what = "bases deg16 vs Links w/ 2+ tissue"
 import numpy as np
 for U in Us:
