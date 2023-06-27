@@ -13,9 +13,9 @@ from GOEAa import *
 
 
 
-fns = ["sampleData\\data-pvalue-5-fin-min.json","sampleData\\data-pvalue-5-fin-minRND.json",
-       "sampleData\\data-pvalue-0.7-fin-min.json","sampleData\\data-pvalue-0.7-fin-minRND.json",
-       "sampleData\\data-pvalue-10-fin-min.json","sampleData\\data-pvalue-10-fin-minRND.json"
+fns = ["./sampleData/data-pvalue-5-fin-min.json","./sampleData/data-pvalue-5-fin-minRND.json",
+       "./sampleData/data-pvalue-0.7-fin-min.json","./sampleData/data-pvalue-0.7-fin-minRND.json",
+       "./sampleData/data-pvalue-10-fin-min.json","./sampleData/data-pvalue-10-fin-minRND.json"
     ]
 
 Us = [UniversalDS(fn) for fn in fns]
@@ -23,12 +23,12 @@ Us[0].DS, Us[1].DS = "Blood cell pcHi-C", "Randomized blood cell pcHi-C"
 Us[2].DS, Us[3].DS = "Tissue pcHi-C", "Randomized tissue pcHi-C"
 Us[4].DS, Us[5].DS = "Tissue Hi-C", "Randomized tissue Hi-C"
 
-Biolog = GOEATool("GOEA/ontologyData/go-basic.obo", "GOEA/ontologyData/hg19_genes_w-go.txt")
+Biolog = GOEATool("./GOEA/ontologyData/go-basic.obo", "./GOEA/ontologyData/hg19_genes_w-go.txt")
 
 
 #triangles1 vs links1
 rezFN = "CL1vsLinks1.csv"
-what = "Cycles C3 w/ 1+ tissue vs Links w/ 1+ tissue"
+what = "Cliques C3 w/ 1+ tissue vs Links w/ 1+ tissue"
 
 for U in Us:
     for ch in U.chrs:
@@ -44,7 +44,7 @@ Biolog.reset()
 
 #triangles2 vs links2
 rezFN = "CL2vsLinks2.csv"
-what = "Cycles C3 w/ 2+ tissue vs Links w/ 2+ tissue"
+what = "Cliques C3 w/ 2+ tissue vs Links w/ 2+ tissue"
 
 for U in Us:
     for ch in U.chrs:
@@ -61,7 +61,7 @@ Biolog.reset()
 
 #triangles1 vs all possibles
 rezFN = "CL2vsAllPossible.csv"
-what = "Cycles C3 w/ 2+ tissue vs All possible genes"
+what = "Cliques C3 w/ 2+ tissue vs All possible genes"
 
 for U in Us:
     for ch in U.chrs:
@@ -106,8 +106,8 @@ Biolog.dump(rezFN)
 Biolog.reset()
 #############################################################
 #bases 5 vs links 2
-rezFN = "BasesLogvsLinks2.csv"
-what = "bases deg16 vs Links w/ 2+ tissue"
+rezFN = "SupportsLogvsLinks2.csv"
+what = "Supports deg16 vs Links w/ 2+ tissue"
 import numpy as np
 for U in Us:
     for ch in U.chrs:
@@ -116,14 +116,14 @@ for U in Us:
         C = BasesOfBases(owner=chData)
         log = int(np.round(np.log2(len(chData.links))))
         C.reduce(deg=log)
-        Biolog.GOEA(C, chData, what="bases deg{log} vs Links w/ 2+ tissue".format(log=log))
+        Biolog.GOEA(C, chData, what="DegSupport {log} (log link count) vs Links w/ 2+ tissue".format(log=log))
 
 Biolog.dump(rezFN)
 Biolog.reset()
 ################################################################
 # #bases log(linkCount) vs links 1
-rezFN = "BasesLogvsLinks1.csv"
-what = "bases degLog vs Links w/ 1+ tissue"
+rezFN = "SupportsLogvsLinks1.csv"
+what = "Supports degLog vs Links w/ 1+ tissue"
 
 for U in Us:
     for ch in U.chrs:
@@ -132,7 +132,7 @@ for U in Us:
         C = BasesOfBases(owner=chData)
         deg = int(np.log2(len(C.links)))
         C.reduce(deg=deg)
-        Biolog.GOEA(C, chData, what=f"bases deg {deg} (log link count) vs Links w/ 1+ tissue")
+        Biolog.GOEA(C, chData, what=f"DegSupport {deg} (log link count) vs Links w/ 1+ tissue")
 
 Biolog.dump(rezFN)
 Biolog.reset()

@@ -1,10 +1,11 @@
 # HiCCliqueGraphs
-This is a repository for our paper **Clique-based topological characterization of Hi-C interaction graphs.**
+This is a repository for **Clique-based topological characterization of Hi-C interaction graphs.**
 
 Scripts for calculating and analyzing different topological elements of Hi-C graphs are included here.
 
 ## Usage
 Clone this repository to your local computer to use it.
+Some scripts include hard-coded relative paths to sample data files. Please run .py scripts from the root directory of the repository.
 
 ### Dependencies
 - python 3.9

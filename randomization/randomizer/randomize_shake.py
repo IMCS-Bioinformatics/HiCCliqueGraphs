@@ -311,7 +311,7 @@ def getNthElementFromSet(S, n):
     return el
 
 class NewSmartRandomizer:
-    def __init__(self, U, randomizablePart=0.80, resultFn="rezz/allBloodRandDefault.json", chrs = None, assertions=False):
+    def __init__(self, U, randomizablePart=0.80, resultFn="./rezz/allBloodRandDefault.json", chrs = None, assertions=False):
         self.U = U
         if chrs is None: chrs=list(reversed(U.chrs))
         self.randomizablePart=randomizablePart
@@ -863,8 +863,10 @@ class NewSmartRandomizer:
         print(fn, "saved")
 
 
-path = "sampleData/"
+path = "./sampleData/"
 fn = "data-pvalue-5-fin-min" #Original graph file to randomize !!!
+# fn = "data-pvalue-0.7-fin-min" # tissue pcHi-C
+# fn = "data-pvalue-10-fin-min" # tissue Hi-C
 print(fn, "<<")
 
 U = UniversalDS(path + fn + ".json") #create UniversalDS instance  

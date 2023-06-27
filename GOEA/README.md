@@ -5,9 +5,13 @@ runGOEA.py generates files with results. Note, it includes hard-coded paths to d
 
 Directory ontologyData contains 2 files that allow to map human genes to chromosome segments and GO terms to genes.
 
+## Results
+Full results (for all datasets and for all chromosomes) is found in [results\GOEAresults](../results/GOEAresults/) directory.
+
 ### What is GOEA
 *This is from our paper*
-To analyze our results, we performed Gene Ontology Enrichment Analysis (GOEA) using the GOATools library. This analysis seeks to identify Gene Ontology terms that are overrepresented in a study gene list compared to a population gene list.
+
+To analyze our results, we performed *Gene Ontology Enrichment Analysis (GOEA)* using the GOATools library. This analysis seeks to identify Gene Ontology terms that are overrepresented in a study gene list compared to a population gene list.
 
 Initially, we assigned genes to nodes in the graph G. Nodes located on chromosomes where a particular gene is expressed are assigned that gene *hg19_genes_w-go.txt was used*. Subsequently, we calculated topological elements, such as C3 and S(k), identified a subset of nodes that form these topological elements, and collated a set of genes present in at least one node of the topological elements. We then conducted the GOEA. *Class Biolog from GOEAa.py module*
 

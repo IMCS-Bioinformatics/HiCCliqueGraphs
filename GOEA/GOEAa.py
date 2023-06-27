@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Jan  4 19:00:00 2023
-
+This file includes methods for GOEA
+These methods are used in runGOEA.py
 @author: asizo
 """
 from universal import *
