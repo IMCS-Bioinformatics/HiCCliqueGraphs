@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Jan 20 09:58:08 2023
-Recalculated some GOEA analyzes, using QD classes
+.py file for running GOEA analysis
 @author: asizo
 fns can be changed
 !Note, script should be run from root directory of the repository (From the directory which has the sampleData subdirectory)

@@ -1,19 +1,21 @@
 # Gene ontology enrichment analysis
-This directory has scripts that are used to perform GOEA
+This directory has scripts that are used to perform GOEA using [goatools library](https://github.com/tanghaibao/goatools)
 
-runGOEA.py generates files with results. Note, it includes hard-coded paths to data files. So, it may be necessary to execute the script from the root directory of this project.
+[runGOEA.py](./runGOEA.py) generates files with results. Note, it includes hard-coded paths to data files. So, it may be necessary to execute the script from the root directory of this project.
 
-Directory ontologyData contains 2 files that allow to map human genes to chromosome segments and GO terms to genes.
+Directory [ontologyData](./ontologyData/) contains 2 files that allow to map human genes to chromosome segments and GO terms to genes.
 
 ## Results
 Full results (for all datasets and for all chromosomes) is found in [results\GOEAresults](../results/GOEAresults/) directory.
+
+[Sample results](./sampleResults/) directory demonstrates GOEA results on sample datasets (chromosomes 6 and 15 only).
 
 ### What is GOEA
 *This is from our paper*
 
 To analyze our results, we performed *Gene Ontology Enrichment Analysis (GOEA)* using the GOATools library. This analysis seeks to identify Gene Ontology terms that are overrepresented in a study gene list compared to a population gene list.
 
-Initially, we assigned genes to nodes in the graph G. Nodes located on chromosomes where a particular gene is expressed are assigned that gene *hg19_genes_w-go.txt was used*. Subsequently, we calculated topological elements, such as C3 and S(k), identified a subset of nodes that form these topological elements, and collated a set of genes present in at least one node of the topological elements. We then conducted the GOEA. *Class Biolog from GOEAa.py module*
+Initially, we assigned genes to nodes in the graph G. Nodes located on chromosomes where a particular gene is expressed are assigned that gene via data from Ensembl gene lists in file [hg19_genes_w-go.txt](./ontologyData/hg19_genes_w-go.txt). Subsequently, we calculated topological elements, such as C3 and S(k), identified a subset of nodes that form these topological elements, and collated a set of genes present in at least one node of the topological elements. We then conducted the GOEA, implemented in *class Biolog from GOEAa.py module*
 
 We executed several analyses, comparing different topological elements. For instance, we collected all C3 elements with a degree of 2 or more and took the genes present in at least one such C3 to form the study gene list. This list was then compared to the population gene list, which consisted of all genes found in at least one link in the graph.
 
