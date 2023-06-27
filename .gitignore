@@ -48,3 +48,4 @@ dist/**
 *.xlf
 package.nls.*.json
 l10n/
+images/image from template/.ipynb_checkpoints/drawFromTemplate-checkpoint.ipynb
