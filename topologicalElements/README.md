@@ -10,3 +10,6 @@ A link that is part of at least `k` different C3 cycles is defined as a 'support
 ## C3 and S(k) calculation 
 Notebook compareDatasets.ipynb demonstrates the calculation of C3 and S(k), and creates images to compare C3 and S(k) of 3 datasets.
 It also creates a csv file with C3 and S(k) counts for 3 datasets
+
+## Usage
+These scripts are used in other directories to find topological elements (C3, Supports)
