@@ -19,7 +19,7 @@ These versions were used by us. Other versions are not guaranteed to work.
 
 ## Data availability
 Sample datasets with data on two chromosomes are included in [sampleData](./sampleData) and all scripts in this repository use them as an example.
-Full datasets that can be used with our scripts can be found ....
+Full datasets that can be used with our scripts can be found [here](http://susurs.mii.lu.lv/HiCData/)
 
 ## Dataset comparison and C3 and S(k) calculation
 Scripts to compare datasets and calculate cliques with 3 vertices (C3) and supports S(k) are located in [topological elements](./topologicalElements)
