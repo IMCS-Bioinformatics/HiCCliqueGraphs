@@ -29,6 +29,7 @@ Scripts to compare datasets and calculate cliques with 3 vertices (C3) and suppo
 Scripts to perform GOEA are found in [GOEA](./GOEA) directory.
 
 ## Enrichment in chromatin annotations
+Scripts to look for enrichment in certain chromatin annotations is found in [enrichment](./enrichment) directory.
 
 ## Randomization
 In order to validate our results, we created graphs that are "similar" to original Hi-C interaction graphs. The randomized graphs have the following properties:
