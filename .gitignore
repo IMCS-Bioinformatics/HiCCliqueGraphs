@@ -50,3 +50,5 @@ package.nls.*.json
 l10n/
 images/image from template/.ipynb_checkpoints/drawFromTemplate-checkpoint.ipynb
 images/IMG-Link lengths in Blood cell pcHi-C chrs.zip
+sourceData
+transformedData
