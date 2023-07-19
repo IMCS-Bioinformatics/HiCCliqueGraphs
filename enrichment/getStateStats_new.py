@@ -3,20 +3,19 @@ import math
 import os
 import json
 import CReader
-import graphFunctions
 import pandas as pd
 import ntpath
 
 templ = {
-    "outputPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/CliqueSegmentStateCount/"),
+    "outputPath": "./results/EnrichmentInAnnotiations/",
     "minIntersection": 0.2,
 }
 
 blood_data = {
     "dataSet": "BloodCellPCHi-C",
-    "dataPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/BloodCellPCHi-C/Universal/"),
-    "supportPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/BloodCellPCHi-C/CliqueSupportSegments/"),
-    "statesPath": os.path.join(os.path.dirname(__file__), "../../chromatin states/RegBuild_BLUEPRINT_annotations_transformed/"),
+    "dataPath": "./transformedData/BloodCellPCHi-C/Universal/",
+    "supportPath": "./transformedData/BloodCellPCHi-C/CliqueBaseSegments/",
+    "statesPath": "./transformedData/RegBuild_BLUEPRINT_annotations_transformed/",
     "pvalues": [5],
     "idToTissue": {"Ery": "Ery", "Mac0": "Mac0", "Mac1": "Mac1", "Mac2": "Mac2", "MK": "MK", "Mon": "Mon", "nCD4": "nCD4", "nCD8": "nCD8", "Neu": "Neu"},
     "stateCategories": {"ctcf": "ctcf", "distal": "distal", "dnase": "dnase", "proximal": "proximal", "tfbs": "tfbs", "tss": "tss"}
@@ -24,9 +23,9 @@ blood_data = {
 
 pcHiC_data = {
     "dataSet": "PCHi-C",
-    "dataPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/PCHi-C/Universal/"),
-    "supportPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/PCHi-C/CliqueSupportSegments/"),
-    "statesPath":  os.path.join(os.path.dirname(__file__), "../../chromatin states/18states.all.mnemonics.bedFiles"),
+    "dataPath": "./transformedData/PCHi-C/Universal/",
+    "supportPath": "./transformedData/PCHi-C/CliqueBaseSegments/",
+    "statesPath": "./sourceData/chromatin states/18states.all.mnemonics.bedFiles",
     "pvalues": [0.7],
     "idToTissue": {"E080": "AD2", "E065": "AO", "E079": "EG2", "E063": "FT2", "E094": "GA", "E116": "GM", "E003": "H1", "E071": "HCmerge", "E126": "IMR90", "E096": "LG", "E066": "LI11", "E095": "LV",
                    "E004": "ME", "E006": "MSC", "E007": "NPC", "E097": "OV2", "E098": "PA", "E100": "PO3", "E104": "RA3", "E105": "RV", "E109": "SB", "E106": "SG1", "E113": "SX", "E005": "TB", "E112": "TH1", "E073": "X5628FC"},
@@ -36,10 +35,10 @@ pcHiC_data = {
 
 normalHiC_data = {
     "dataSet": "NormalHi-C",
-    "dataPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/NormalHi-C/Universal/"),
-    "supportPath": os.path.join(os.path.dirname(__file__), "../ProcessedData/NormalHi-C/CliqueSupportSegments/"),
-    "statesPath":  os.path.join(os.path.dirname(__file__), "../../chromatin states/18states.all.mnemonics.bedFiles"),
-    "pvalues": [10, 6],
+    "dataPath": "./transformedData/NormalHi-C/Universal/",
+    "supportPath": "./transformedData/NormalHi-C/CliqueBaseSegments/",
+    "statesPath":  "./sourceData/chromatin states/18states.all.mnemonics.bedFiles",
+    "pvalues": [10],
     "idToTissue": {"E080": "AD", "E065": "AO", "E125": "ASCE", "E003": "H1", "E126": "F0", "E096": "LG", "E066": "LI",
                    "E004": "ME", "E006": "MS", "E007": "TP", "E097": "OV", "E098": "PA", "E100": "PO", "E109": "SB", "E113": "SX", "E112": "TH"},
     "stateCategories": {'1_TssA': 'TSS', '2_TssFlnk': 'TSS', '3_TssFlnkU': 'TSS', '4_TssFlnkD': 'TSS', '5_Tx': 'TX', '6_TxWk': 'TX', '7_EnhG1': 'ENH', '8_EnhG2': 'ENH', '9_EnhA1': 'ENH',
@@ -51,7 +50,7 @@ data_sets = [blood_data, pcHiC_data, normalHiC_data]
 ##########################
 # Assumptions: each set of segments (base and state) are disjoint, therefore one parallel traversal is enough
 # Base segments are sorted
-# Bed file (state file) is grouped by chr, and sorted by segments
+# State files are grouped by chr, and sorted by segments
 ##########################
 
 
@@ -109,10 +108,21 @@ def intersectsEnough(segm1, segm2, minIntersection):
     return False
 
 
+# Creates an adjacency list for the graph
+def getAdj(links):
+    adj = {}
+    for link in links:
+        for i in [0, 1]:
+            if link[i] not in adj:
+                adj[link[i]] = set()
+            adj[link[i]].add(link[1-i])
+    return adj
+
+
 # Creates a list of segments that are in cliques (C3)
 def getClique3SegmentIDs(segments, links):
     cliqueSegments = set()
-    adj = graphFunctions.getAdj(links)
+    adj = getAdj(links)
     for link in links:
         if not (link[0] in cliqueSegments and link[1] in cliqueSegments):
             if len(adj[link[0]] & adj[link[1]]) > 0:
@@ -152,8 +162,7 @@ def getStateCounts(segmentStates, cliqueSegments, tissues):
 
 
 # Adds a row to result data, including ratio of state count in cliques vs general
-def updateResults(support, segmentStates, cliqueSegments, tissues):
-    segmentCountForLinks = len(segmentStates.keys())
+def updateResults(support, segmentCountForLinks, cliqueSegments, tissues):
     segmentCountForCliques = len(cliqueSegments)
     if support not in dataForCliques:
         dataForCliques[support] = []
@@ -198,12 +207,12 @@ def writeResults(fn):
         writer.sheets['LinksNorm'].set_column(
             3 + len(tissues), 2 + len(categories) + len(tissues), None, percent_format)
         for support in supports:
-            columns[2] = "Total support segment count"
+            columns[tissueCount + 1] = "Total support segment count"
             df = pd.DataFrame(dataForCliques[support], columns=columns)
             df.to_excel(writer, sheet_name='Support' + support)
             df = pd.DataFrame(
                 dataForCliquesNorm[support], columns=columns)
-            columns[2] = "Support to all segment ratio"
+            columns[tissueCount + 1] = "Support to all segment ratio"
             df.to_excel(writer, sheet_name='Support' + support + 'norm')
             df3 = pd.DataFrame(dataForRatios[support], columns=columns)
             df3.to_excel(writer, sheet_name='Ratio' + support)
@@ -225,7 +234,8 @@ for data_set in data_sets:
             data_set["dataPath"] + "data-pvalue-" + str(pvalue) + "-fin.json")
         segmentStates = {chr: {} for chr in baseData["chrNames"]}
         # Calculate for supports in tissue pairs and cliques (C3) in single tissues
-        for orAnd in ["OR", "AND", "C3"]:
+        # for orAnd in ["OR", "AND", "C3"]:
+        for orAnd in ["OR", "C3"]:
             # Support segments should already be calculated, but C3 segments will be calculated later
             if orAnd == "C3":
                 supportNSegments = {"1": {chr: {}
@@ -288,10 +298,10 @@ for data_set in data_sets:
                         stateCountForLinks, stateCountForCliques = getStateCounts(
                             segmStatesAnd, cliqueSegments, tissues)
                         updateResults(
-                            support, segmStatesAnd, cliqueSegments, list(tissues))
+                            support, len(tissueSegments), cliqueSegments, list(tissues))
                     # Update link results
                     segmentCountForLinks = len(
-                        segmStatesAnd.keys())
+                        tissueSegments)
                     stateCounts = [stateCountForLinks.get(
                         state, 0) for state in categories]
                     dataForLinks.append(
@@ -306,5 +316,5 @@ for data_set in data_sets:
             ds = data_set["dataSet"]
             if not os.path.exists(templ["outputPath"]):
                 os.makedirs(templ["outputPath"])
-            output_filename = f"{ds}-pv{pvalue}-stateSegmentCount-tis1.xlsx" if orAnd == "C3" else f"{ds}-pv{pvalue}-stateSegmentCount-supportN-{orAnd}-tis2.xlsx"
+            output_filename = f"{ds}-pv{pvalue}-stateSegmentCount-linksAndC3.xlsx" if orAnd == "C3" else f"{ds}-pv{pvalue}-stateSegmentCount-supportN-{orAnd}.xlsx"
             writeResults(templ["outputPath"] + output_filename)
