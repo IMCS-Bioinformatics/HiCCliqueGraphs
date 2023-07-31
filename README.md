@@ -46,3 +46,5 @@ Result validation by comparing real and generated graphs is found in [randomized
 ## Images
 Images used in our paper can be generated using scripts in [image generation](./images)
 
+## Funding
+This work is supported by the Latvian Council of Science project lzp-2021/1-0236
