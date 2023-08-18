@@ -1,0 +1,14 @@
+{
+    "useLinkList": false,
+    
+    "inputFn": "./schwarzerChr15Sample.cool",
+    "outputFn": "./schwarzerChr15Randomized80.cool",
+
+    "q": 0.7,
+    "runNaiveRandomization": false,
+    
+    "coolRelated":{
+        "chr": "15",
+        "countTreshold": 4
+    }
+}

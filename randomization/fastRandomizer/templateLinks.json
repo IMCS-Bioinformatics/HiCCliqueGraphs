@@ -1,0 +1,13 @@
+{
+    "useLinkList": true,
+    
+    "inputFn": "./sampleOriginalLinks.csv",
+    "outputFn": "./myRandomizedLinks.csv",
+
+    "q": 0.7,
+    "runNaiveRandomization": false,
+    
+    "coolRelated":{
+        
+    }
+}

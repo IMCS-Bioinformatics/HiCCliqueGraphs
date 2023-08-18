@@ -1,0 +1,14 @@
+{
+    "useLinkList": false,
+    
+    "inputFn": "./sampleCool.cool",
+    "outputFn": "./sampleCool-randomized.cool",
+
+    "q": 0.7,
+    "runNaiveRandomization": false,
+    
+    "coolRelated":{
+        "chr": "chr15",
+        "countTreshold": 4
+    }
+}
