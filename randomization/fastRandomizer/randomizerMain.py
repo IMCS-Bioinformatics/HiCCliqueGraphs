@@ -196,7 +196,7 @@ class BigRandomizer:
         self.initLengthMod()
         self.lengthGroups = LengthGroups(self, minElementCount=32, minLengthCount=2)
 
-        self.params["longestToleratedLength"] = self.lengthGroups.maxExistingLength*1.25 #TODO
+        self.params["longestToleratedLength"] = self.lengthGroups.maxExistingLength*1.5 #TODO
         
         self.changedLinkInds = set() #set of link indeces
         unchangedLinkInds = [i for i in range(self.linkCount)]
