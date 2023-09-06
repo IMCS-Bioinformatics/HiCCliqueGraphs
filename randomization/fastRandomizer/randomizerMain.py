@@ -247,6 +247,15 @@ class BigRandomizer:
             self.counter+=1
             if ((self.counter%1000) == 0):
                 self.doMillenium()
+                #Sometimes we choose to give up - if no link could be swapped in 5000 tries, we finish
+                #If k=5 x 1000 in a row no link could be swapped, program gives up and finishes the process
+                if not (hasattr(self, "swapLimitation")):
+                    k=5 
+                    self.swapLimitation = [0 for _ in range(k)] + [0,k]
+                self.swapLimitation[self.swapLimitation[-2]]=len(self.changedLinkInds) 
+                self.swapLimitation[-2]=(self.swapLimitation[-2]+1)%(self.swapLimitation[-1])
+                if self.counter>1000 and len(set(self.swapLimitation[:-2]))==1: break #give up
+                
             #Choice - whether improve lengths or swap new links; pasaka, vai uzlabosim, vai mainīsim
             if self.throwCoin():
                 #improve lengths
