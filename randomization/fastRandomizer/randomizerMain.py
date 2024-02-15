@@ -194,7 +194,7 @@ class BigRandomizer:
         minSegmentCountParam = round(math.log2(len(self.segments))) #+-32
 
         self.initLengthMod()
-        self.lengthGroups = LengthGroups(self, minElementCount=32, minLengthCount=2)
+        self.lengthGroups = LengthGroups(self, minElementCount=32, minLengthCount=3)
 
         self.params["longestToleratedLength"] = self.lengthGroups.maxExistingLength*1.5 #TODO
         
@@ -532,10 +532,10 @@ class BigRandomizer:
             ax.hist([l for l in originalLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=int(MAX_DRAWABLE_LINK//10e5), alpha=0.9, label="Original", histtype='step')
             ax.hist([l for l in currentLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=int(MAX_DRAWABLE_LINK//10e5), alpha=0.9, label="Randomized", histtype='step')
             ax.hist([l for l in swappedLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=int(MAX_DRAWABLE_LINK//10e5), alpha=0.9, label="Swapped", histtype='step')
-            # ax.hist([l for l in originalLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(originalLinkLengthsDraw)))), alpha=0.9, label="Original", histtype='step')
-            # ax.hist([l for l in currentLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(currentLinkLengthsDraw)))), alpha=0.9, label="Randomized", histtype='step')
-            # ax.hist([l for l in swappedLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(swappedLinkLengthsDraw)))), alpha=0.9, label="Swapped", histtype='step')
-            # ax.hist([l for l in self.blackLine if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(self.blackLine)))), alpha=0.9, label="extra available", histtype='step', color="black")
+            ax.hist([l for l in originalLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(originalLinkLengthsDraw)))), alpha=0.9, label="Original", histtype='step')
+            ax.hist([l for l in currentLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(currentLinkLengthsDraw)))), alpha=0.9, label="Randomized", histtype='step')
+            ax.hist([l for l in swappedLinkLengthsDraw if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(swappedLinkLengthsDraw)))), alpha=0.9, label="Swapped", histtype='step')
+            ax.hist([l for l in self.blackLine if l<=MAX_DRAWABLE_LINK], bins=list(sorted(list(set(self.blackLine)))), alpha=0.9, label="extra available", histtype='step', color="black")
 
             #add black line that show how many links of a given length can be added to a graph till it is full
 
@@ -579,6 +579,7 @@ class BigRandomizer:
             "positive links": [0,0], #["never swapped links in positive groups; swapped links in positive groups"]
             "bad links": 0,
             "swapped links": 0,
+            "total links": self.linkCount,
             "case scores": [[0,0,0,0,0,0],[0,0,0,0,0,0]],
             "cases pool": [[0,0,0,0,0,0],[0,0,0,0,0,0]],
         }
@@ -611,7 +612,7 @@ class BigRandomizer:
             self.initStats()
         
         if self.params["modes"]["show graphs"]:
-            if ( self.counter>0 and self.counter%10000)==0:
+            if ( self.counter>0 and self.counter%2000)==0:
                 originalLinkLengthsDraw = self.originalLinkLengthsDraw
                 currentLinkLengthsDraw = [link[1]-link[0] for link in self.links]
                 swappedLinkLengthsDraw = [self.links[i][1] - self.links[i][0] for i in range(self.linkCount) if i in self.changedLinkInds]
