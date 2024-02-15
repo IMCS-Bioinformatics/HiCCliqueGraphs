@@ -1,0 +1,1 @@
+Data files are too large. The files used can be found in http://susurs.mii.lu.lv/HiCData/processDifferentDB.zip
