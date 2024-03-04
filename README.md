@@ -3,6 +3,8 @@ This is a repository for **Clique-based topological characterization of Hi-C int
 
 Scripts for calculating and analyzing different topological elements of Hi-C graphs are included here.
 
+For randomization that produces topologically similar graphs, see [randomization](./randomization/fastRandomizer)
+
 ## Usage
 Clone this repository to your local computer to use it.
 Some scripts include hard-coded relative paths to sample data files. Please run .py scripts from the root directory of the repository.

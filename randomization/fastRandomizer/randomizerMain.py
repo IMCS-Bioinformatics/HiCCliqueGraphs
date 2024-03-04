@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 class RandLauncher:
     """
     This class reads template and launches the randomization
+    argument to pass: eiter file name with a template, or a dict object directly
     """
     def __init__(self, templateName="template.json"):
         self.templateName=templateName
@@ -18,9 +19,13 @@ class RandLauncher:
 
     def readTemplate(self):
         #reads the template file with instructions for the randomization
-        templateName= self.templateName
-        with open(templateName, 'r') as f:
-            self.template = json.load(f)
+        if type(self.templateName)==type(dict()):
+            #in case a template is passed instead of a file name with that template, it is processed here
+            self.template = self.templateName
+        else:
+            templateName= self.templateName
+            with open(templateName, 'r') as f:
+                self.template = json.load(f)
         print("Template is read")
         if self.template["useLinkList"]:
             #link list is given
@@ -28,8 +33,12 @@ class RandLauncher:
         else:
             #cool file is given
             self.version="cool"
-        if not os.path.isfile(self.template["inputFn"]):
-            raise Exception(f"File from template[inputFn] - {self.template['inputFn']} - not found")
+        if type(self.template["inputFn"])!=type([]):
+            if not os.path.isfile(self.template["inputFn"]):
+                raise Exception(f"File from template[inputFn] - {self.template['inputFn']} - not found")
+        else:
+            #in inputFn instead of a fileName, a list of links can also be passed
+            pass
         
 
     def randomize(self):
@@ -42,11 +51,16 @@ class RandLauncher:
     def randomizeLinks(self):
         #template asks to randomize a list of links (not .cool file)
         #first, read the links from file
-        print("Reading link list..")
-        with open(self.template["inputFn"], newline='') as csvfile:
-            spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
-            L = [[int(row[0]),int(row[1])] for row in spamreader]
-        print("Link list read")
+        if type(self.template["inputFn"])!=type([]):
+            print("Reading link list..")
+            with open(self.template["inputFn"], newline='') as csvfile:
+                spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+                L = [[int(row[0]),int(row[1])] for row in spamreader]
+            print("Link list read")
+        else:
+            print("Taking link list directly from the template object")
+            L = self.template["inputFn"]
+            print("..taken")
         if self.template["runNaiveRandomization"]:
             mode="randomizeLinksIgnoreLengths"
         else:
@@ -141,8 +155,9 @@ class BigRandomizer:
         else:
             random.seed(seed)
         print("BigRandomizer init")
-        self.initialization()
+        
         if mode is None:
+            self.initialization()
             self.startSwapping()
             self.doMillenium()
         elif mode=="randomizeLinksIgnoreLengths":
@@ -179,7 +194,7 @@ class BigRandomizer:
         if self.printMode is None: #controls amount of information printed
             self.params["modes"] = {"show output": True,
                                     "show minimum output": True,
-                                    "show graphs": True}
+                                    "show graphs": False}
         else:
             self.params["modes"] = self.printMode
 
@@ -232,13 +247,14 @@ class BigRandomizer:
         for le in possibleLinkLengths:
             linksCanRanodmize+=min((possibleLinksForLength[le] - existingLinksForLength[le]), (existingLinksForLength[le]))
         self.linksCanBeRandomized = linksCanRanodmize
+        
+
+    def startSwapping(self):
+        #main method that starts swapping the links
         self.linksToRandomize = int(self.linksCanBeRandomized*self.q)
         print(f"Out of {self.linkCount} links, only {self.linksCanBeRandomized} can theoretically be randomized.\n\
               User asks to randomize {self.q} of links, therefore {self.linksToRandomize} links will be randomized")
 
-
-    def startSwapping(self):
-        #main method that starts swapping the links
         self.counter=0
         
         while len(self.changedLinkInds) < self.linksToRandomize:
@@ -603,7 +619,7 @@ class BigRandomizer:
         if self.params["modes"]["show output"]:
             self.updateStats()
             if self.params["modes"]["show minimum output"]:
-                print(f'Iterations: {self.stats["iterations"]};  time:{self.stats["time"]}; already swapped: {self.stats["swapped links"]} / {self.linksToRandomize};')
+                print(f'Iterations: {self.stats["iterations"]};  time:{self.stats["time"]}; already swapped: {self.stats["swapped links"]} / {self.linksToRandomize}; (bad: {self.stats["bad links"]}) ')
             else:
                 print(self.stats)
             self.dumpStats()
@@ -664,7 +680,7 @@ class BigRandomizer:
             spamwriter.writerows(self.links)
         print (fn, "saved")
 
-    def randomizeLinksIgnoreLengths(self):
+    def randomizeLinksIgnoreLengths2(self):
         #For result validation, the naive version of the randomization
         self.existingLinks = set([tuple(sorted(link)) for link in self.links])
         while (len(self.existingLinks) - self.linkCount) < self.linksToRandomize:
@@ -683,3 +699,68 @@ class BigRandomizer:
             if len(set([tuple(link) for link in self.links]))!=len(self.links):
                 iii=9
         iii=9
+    def randomizeLinksIgnoreLengths(self):
+        
+        self.initialLinks = set([tuple(sorted(link)) for link in self.links]) #links in initial graph
+        self.existingLinks = [tuple(sorted(link)) for link in self.links] #links that exists at this moment
+        self.existingLinksMap = {link:i for i,link in enumerate(self.existingLinks)}
+        self.availableLinks = set([tuple(sorted(link)) for link in self.links]) #links that were in the initial graph, still exist and have never been changed
+        
+        self.linksToRandomize = int(len(self.initialLinks)*self.q)
+        
+        maxCounter = math.sqrt(len(self.initialLinks))
+        counter=0
+        while (len(self.availableLinks) > (len(self.initialLinks)-self.linksToRandomize)) and counter<maxCounter:
+            oneLink = self.availableLinks.pop()
+            ind0 = self.existingLinksMap[oneLink]
+            ind1 = random.randint(0,len(self.existingLinks)-1)
+            otherLink = self.existingLinks[ind1]
+            if len(set([oneLink[0], oneLink[1], otherLink[0], otherLink[1]])) != 4:
+                self.availableLinks.add(oneLink)
+                counter+=1
+                continue
+            #we want to swap
+            index = [random.randint(0, 1), random.randint(0, 1)]
+            links = [copy.copy(oneLink), copy.copy(otherLink)]
+            links = [list(el) for el in links]
+            links[0][index[0]], links[1][index[1]] = links[1][index[1]], links[0][index[0]]
+            links[0] = sorted(links[0])
+            links[1] = sorted(links[1])
+            links = [tuple(el) for el in links]
+            swapIsPossible=True
+            for link in links:
+                if link in self.initialLinks or link in self.existingLinksMap: 
+                    swapIsPossible = False
+            if not(swapIsPossible):
+                self.availableLinks.add(oneLink)
+                counter+=1
+                continue
+            #new links are links[0] and links[1]
+            #old, swapped links are oneLink and otherLink
+            self.availableLinks.discard(otherLink)
+            del self.existingLinksMap[oneLink]
+            del self.existingLinksMap[otherLink]
+
+            self.existingLinks[ind0]=links[0]
+            self.existingLinksMap[links[0]] = ind0
+            self.existingLinks[ind1]=links[1]
+            self.existingLinksMap[links[1]] = ind1
+            
+            counter=0
+
+            if len(self.existingLinksMap)!=len(self.initialLinks):
+                raise Exception("there are more or less links than there were before")
+        iii=0
+        self.links = [list(tup) for tup in self.existingLinks]
+        self.links = sorted(self.links, key=lambda x:(x[0],x[1]))
+        if counter>=maxCounter:
+            print("Could not finish, because too many attempts in a row generated existing links")
+            raise Exception("could not finish")
+        iii=1
+
+
+
+
+
+
+            
