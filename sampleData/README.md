@@ -6,3 +6,7 @@ data-pvalue-10-fin* - Kim, K., Jang, I., et al.: 3DIV update for 2021: a compreh
 
 JSON files contain data from these datasets. These JSON files are used in our scripts because they combine all necessary information that is necessary for our programs.
 Data on all chromosomes is available [here](http://susurs.mii.lu.lv/HiCData/)
+
+The same datasets as well as Schwarzer Hi-C dataset from Schwarzer W et al., Two independent modes of chromatin organization revealed by cohesin removal, in Nature, vol. 551, no. 7678, pp. 51–56, 2017. [Online]. Available: https://doi.org/10.1038/nature24281 
+but seperated by chromosomes for usage in [randomization](../randomization/fastRandomizer/demo-perform-randomizations-and-analysis.ipynb) are found here for some of the chromosomes. All chromosome data is available [here](http://susurs.mii.lu.lv/HiCData/) under Hi-C datasets seperated by chromosome
+
