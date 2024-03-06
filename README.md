@@ -41,9 +41,8 @@ In order to validate our results, we created graphs that are "similar" to origin
 - Distribution of chromatin interaction lengths in both graphs is as similar as possible. 
 
 ### Randomized graph generation
-Script to generate a randomized graph that is "similar" to a given Hi-C graph can be found in [graph randomization](./randomization/randomizer)
-### Randomized graph analysis
-Result validation by comparing real and generated graphs is found in [randomized graph analysis](./randomization/analysis)
+Script to generate a randomized graph that is "similar" to a given Hi-C graph can be found in [graph randomization](./randomization/fastRandomizer/)
+
 
 ## Images
 Images used in our paper can be generated using scripts in [image generation](./images)
