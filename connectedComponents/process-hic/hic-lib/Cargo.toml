@@ -1,0 +1,12 @@
+[package]
+name = "hic-lib"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+zip = "0.6.3"
+csv = "1.1.6"
+serde = { version = "1", features = ["derive"] }
+flate2 = "1.0.25"
