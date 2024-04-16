@@ -1,9 +1,3 @@
 [workspace]
 
-members = [
-    "hic-lib",
-    "converter",
-    "add-states-and-genes",
-    "pchic-converter",
-    "sandbox"
-]
+members = ["hic-lib", "converter", "add-states-and-genes", "pchic-converter"]
