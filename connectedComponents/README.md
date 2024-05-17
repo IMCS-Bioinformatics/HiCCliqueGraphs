@@ -21,6 +21,6 @@ The pre-processing has been tested using these versions of dependencies:
 - Python 3.12
 
 ## Flowchart
-An image below shows the steps and data sets used during pre-processing to generate files that can be visualized using ComponentVis.
+An image below shows the steps and data sets used during pre-processing to generate files that can be visualized using ComponentVis. The whole process is automated using bash scripts for the example data sets. 
 
 ![Flowchart for ComponentVis](https://github.com/IMCS-Bioinformatics/HiCCliqueGraphs/assets/119489036/80d2dd3b-dbb7-4372-9185-588cb0017a98)
