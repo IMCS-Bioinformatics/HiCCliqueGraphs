@@ -1,4 +1,4 @@
-# HiCCliqueGraphs
+# ComponentVis pre-processing
 This directory contains all pre-processing scripts and programs for [ComponentVis](https://github.com/IMCS-Bioinformatics/ChromatinNetworkVisualisation/tree/main/Visualizations/ComponentVisualization).
 
 [process-hic](./process-hic) includes code for transforming Hi-C data from its original format to a format that is used for other programs and adding ChromHMM annotations, genes and proteins.
