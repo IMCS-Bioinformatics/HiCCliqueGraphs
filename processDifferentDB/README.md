@@ -23,4 +23,7 @@ The data for graph segments is taken from:
 - Roadmap Epigenomics, [Kundaje et al. (2015)](https://doi.org/10.1038/nature14248)
 - TF ChIP-seq data from ENCODE [Luo et al. (2020)](https://academic.oup.com/nar/article/48/D1/D882/5622708)
 
+Figure below shows an overview of the data processing where sequentially new data is added to graph nodes. In the end a C3 subgraph is taken for further analysis.
+
+![Visualizations-flowcharts-Bisoclique drawio](https://github.com/IMCS-Bioinformatics/HiCCliqueGraphs/assets/119489036/0147e38b-8027-4cc3-84d3-e1ba8d35fd3d)
 

@@ -24,6 +24,8 @@ normal_hic_path = "Source_data/Normal_HiC(hg19,3DIV_legacy)_10/"
 os.makedirs(normal_hic_path, exist_ok=True)
 pchic_path = "Source_data/pcHi-C(hg19)/"
 os.makedirs(pchic_path, exist_ok=True)
+tad_path = "Processed_data/NormalHiC/TADs/"
+os.makedirs(tad_path, exist_ok=True)
 
 for id in roadmap_ids:
     download_file(f"{data_url}18states.all.mnemonics.bedFiles/{id}_18_core_K27ac_mnemonics.bed.gz", f"{state_path_bed}{id}.bed.gz")
@@ -43,3 +45,7 @@ for id in pchic_tissue_ids:
 download_file(f"{data_url}Tissue_name_mapping/tissue-id-name-roadmap.csv", f"{pchic_path}tissue-id-name-roadmap.csv")
 
 download_file(f"{data_url}hg19_genes_symbols.csv", "Source_data/hg19_genes+symbols.csv")
+
+chrs = [i for i in range(1, 23)] + ["X"]
+for chr in chrs:
+    download_file(f"{data_url}TADs/RealRes-chr{chr}-SpectralTad.json", f"{tad_path}RealRes-chr{chr}-SpectralTad.json")
