@@ -1,4 +1,4 @@
-This directory contains scripts to collect C3 segment data for Hi-C graphs from Encode and ensembl databases.
+![Visualizations-flowcharts-Bioclique drawio (1)](https://github.com/IMCS-Bioinformatics/HiCCliqueGraphs/assets/119489036/a1be5c40-bcc2-4635-98af-c5109cdef4d0)This directory contains scripts to collect C3 segment data for Hi-C graphs from Encode and ensembl databases.
 
 This directory with all data files (that take much storage) is available at http://susurs.mii.lu.lv/HiCData/processDifferentDB.zip
 
@@ -23,4 +23,7 @@ The data for graph segments is taken from:
 - Roadmap Epigenomics, [Kundaje et al. (2015)](https://doi.org/10.1038/nature14248)
 - TF ChIP-seq data from ENCODE [Luo et al. (2020)](https://academic.oup.com/nar/article/48/D1/D882/5622708)
 
+Figure below shows an overview of the data processing where sequentially new data is added to graph nodes. In the end a C3 subgraph is taken for further analysis.
+
+![Visualizations-flowcharts-Bisoclique drawio](https://github.com/IMCS-Bioinformatics/HiCCliqueGraphs/assets/119489036/0147e38b-8027-4cc3-84d3-e1ba8d35fd3d)
 
