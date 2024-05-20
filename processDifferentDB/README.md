@@ -1,4 +1,4 @@
-![Visualizations-flowcharts-Bioclique drawio (1)](https://github.com/IMCS-Bioinformatics/HiCCliqueGraphs/assets/119489036/a1be5c40-bcc2-4635-98af-c5109cdef4d0)This directory contains scripts to collect C3 segment data for Hi-C graphs from Encode and ensembl databases.
+This directory contains scripts to collect C3 segment data for Hi-C graphs from Encode and ensembl databases.
 
 This directory with all data files (that take much storage) is available at http://susurs.mii.lu.lv/HiCData/processDifferentDB.zip
 
