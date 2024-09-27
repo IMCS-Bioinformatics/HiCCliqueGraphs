@@ -1,0 +1,1 @@
+Please download Hi-C datasets in a preprocessed format for [tissue pcHi-C dataset](http://susurs.mii.lu.lv/HiCData/data-pvalue-0.7-fin-digraph-GRCh38.json) and [tissue pcHi-C dataset](http://susurs.mii.lu.lv/HiCData/data-pvalue-10-fin-GRCh38.json) and place them here

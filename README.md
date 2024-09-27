@@ -11,11 +11,10 @@ Some scripts include hard-coded relative paths to sample data files. Please run 
 
 ### Dependencies
 - python 3.9
-- numpy 1.21.5
-- matplotlib 3.5.2
 - networkx 2.8.4
 - goatools 1.2.4
 - intervaltree 3.1.0
+- pyliftover 0.4
 
 These versions were used by us. Other versions are not guaranteed to work.
 
@@ -41,14 +40,17 @@ In order to validate our results, we created graphs that are "similar" to origin
 - Distribution of chromatin interaction lengths in both graphs is as similar as possible. 
 
 ### Randomized graph generation
-Script to generate a randomized graph that is "similar" to a given Hi-C graph can be found in [graph randomization](./randomization/fastRandomizer/)
+Script to generate a randomized graph that is "similar" to a given Hi-C graph can be found in [graph randomization](./randomization/fastRandomizer/) and is described in [our JBCB paper](10.1142/S0219720024400018)
 
 
 ## Images
-Images used in our paper can be generated using scripts in [image generation](./images)
+Images used in [our ISBRA 2023 paper](https://doi.org/10.1007/978-981-99-7074-2_38) can be generated using scripts in [image generation](./images)
 
 ## Analysis of segments using Encode and Ensembl
 Scripts to analyze the graph segments using additional biological data can be found in [processDifferentDB](./processDifferentDB)
+
+## Analysis of gene and FANTOM5 expressions in cCRE cliques
+Scripts for our ICCBB 2024 submission where we explore expressions of genes and FANTOM5 profiles in different topological elements can be found in [encodeCcreCliqueExpressions](./encodeCcreCliqueExpressions)
 
 ## Funding
 This work is supported by the Latvian Council of Science project lzp-2021/1-0236
