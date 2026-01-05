@@ -3,7 +3,7 @@ This is a repository for **Clique-based topological characterization of Hi-C int
 
 Scripts for calculating and analyzing different topological elements of Hi-C graphs are included here.
 
-For randomization that produces topologically similar graphs, see [randomization](./randomization/fastRandomizer)
+For randomization that produces topologically similar graphs, see [randomization](./randomization/fastRandomizer). The generated datasets using the randomization are stored on [Zenodo](https://doi.org/10.5281/zenodo.18001369).
 
 ## Usage
 Clone this repository to your local computer to use it.
