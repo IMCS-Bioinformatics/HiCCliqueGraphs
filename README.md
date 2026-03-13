@@ -5,6 +5,9 @@ Scripts for calculating and analyzing different topological elements of Hi-C gra
 
 For randomization that produces topologically similar graphs, see [randomization](./randomization/fastRandomizer). The generated datasets using the randomization are stored on [Zenodo](https://doi.org/10.5281/zenodo.18001369).
 
+## Single-cell Hi-C ranking with clique-based motifs
+Scripts for ranking and ordering single-cell Hi-C datasets using clique-based topological motifs can be found in [SCHiCRank](./SCHiCRank)
+
 ## Usage
 Clone this repository to your local computer to use it.
 Some scripts include hard-coded relative paths to sample data files. Please run .py scripts from the root directory of the repository.
